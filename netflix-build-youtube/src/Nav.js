@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Nav.css';
 
 
-
-
-
 function Nav() {
+    
+    const [ show, handleShow ] = useState(false);
+    const transitionNavBar = () => {
+        if ( window.scrollY > 100 ) {
+            handleShow( true )
+        } else {
+            handleShow( false) 
+        }
+    }
+
+    useEffect( () => {
+        window.addEventListener('scroll', transitionNavBar);
+        return () => window.removeEventListener('scroll', transitionNavBar);
+    }, [])
+
     return(
-        <div className = 'nav'>
+        <div className = {`nav ${show && "nav_black"}`}>
             <div className = 'nav_contents'>
                 <img 
                     className = 'nav_logo'
-                    src='https://images.crowdspring.com/blog/wp-content/uploads/2016/06/27132348/netflix-new-logo.png' 
+                    src='https://assets.stickpng.com/images/580b57fcd9996e24bc43c529.png' 
                     alt='netflix logo' 
                 />
 
@@ -21,7 +33,6 @@ function Nav() {
                     alt = "netflix avatar placeholder" 
                 />
             </div>
-            <h1> This is the Nav </h1>;
         </div>
     )
 }
